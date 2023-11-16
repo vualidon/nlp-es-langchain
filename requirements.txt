@@ -1,0 +1,6 @@
+langchain
+elasticsearch
+dotenv
+datasets
+openai
+sentence-transformers
