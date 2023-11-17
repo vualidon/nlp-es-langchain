@@ -7,7 +7,7 @@ st.title("# DEMO")
 query = st.text_input("Input your question here")
 btn_submit = st.button("SUBMIT")
 
-references = semantic_search(query, 3)
+references = semantic_search(query, 5)
 references = [reference['_source']['content'] for reference in references]
 references = '\n\n'.join(references)
 

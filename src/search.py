@@ -7,7 +7,7 @@ model = SentenceTransformer('nlplabtdtu/sbert-70M-cased')
 
 def bm25_search(query, n):
     bm25 = es.search(
-        index="edu_data", 
+        index="education", 
         body={"query": 
             {"match": {"content": query }}
         }
@@ -18,7 +18,7 @@ def bm25_search(query, n):
 def semantic_search(query, n):
     question_embedding = model.encode(query)
 
-    sem_search = es.search(index="edu_data", body=
+    sem_search = es.search(index="education", body=
                         {
                                 "query": {
                                     "script_score": {
