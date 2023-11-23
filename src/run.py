@@ -8,8 +8,8 @@ def main():
     # model = SentenceTransformer('nlplabtdtu/sbert-70M-cased')
     model = SentenceTransformer('nlplabtdtu/sbert-70M-cased')
     # index_name = 'xquad_bert_70_cased'
-    index_name = 'xquad_bert_70_cased'
-    inp_question = "Quy chế tuyển sinh của trường Đại học công an nhân dân"
+    index_name = 'luat_ma_tuy'
+    inp_question = "Cây có chứa chất ma túy là gì?"
 
     inp_questions = generate_questions(inp_question)
     print(inp_questions)
