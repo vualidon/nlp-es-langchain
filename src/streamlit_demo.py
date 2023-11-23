@@ -1,21 +1,29 @@
-from response import generate
-from search import bm25_search, semantic_search
 import streamlit as st
-
+from search import *
+from generate import *
+from elasticsearch import Elasticsearch
+from sentence_transformers import SentenceTransformer
+import tiktoken
 
 st.title("# DEMO")
-query = st.text_input("Input your question here")
+inp_question = st.text_input("Enter your question here:")
 btn_submit = st.button("SUBMIT")
 
-references = semantic_search(query, 5)
-references = [reference['_source']['content'] for reference in references]
-references = '\n\n'.join(references)
+es = Elasticsearch("http://localhost:9200") 
+model = SentenceTransformer('nlplabtdtu/sbert-70M-cased')
+index_name = 'xquad_bert_70_cased'
+
+
 
 if btn_submit:
-    answer = generate(f"""
-    Từ thông tin: ```{references}```
+    inp_questions = generate_questions(inp_question)
 
-    Hãy trả lời câu hỏi: ```{query}```
-    """)
-
+    rrf_scores = multi_query_search(es, index_name, model, inp_questions, alpha=0.5)
+    docs = get_docs(es, index_name, rrf_scores, k=5)
+    document = "\n\n".join([doc['_source']['content'] for doc in docs])
+    encoding = tiktoken.encoding_for_model("gpt-3.5-turbo")
+    print("TOKENS", len(encoding.encode(document)))
+    with open("document.txt", "w", encoding='utf8') as f:
+        f.write(document)
+    answer = generate_answer(document, inp_question)
     st.write(answer)
