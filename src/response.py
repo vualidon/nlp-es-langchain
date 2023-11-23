@@ -6,8 +6,7 @@ def generate(prompt):
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
         messages=[
-            {"role": "system", "content": """Bạn là một người hướng dẫn trong trường học.\
-             Công việc của bạn là giúp cho người khác hiểu được thông tin của trường một cách chi tiết nhất."""},
+            {"role": "system", "content": """"""},
             {"role": "user", "content": prompt}
         ],
         temperature=0.9
